@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>С4.6</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        .slider {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slider__image-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slider__image {
+            width: 100%;
+            height: auto;
+        }
+
+        .slider__button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: transparent;
+            border: none;
+            font-size: 24px;
+            color: #000;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .slider__button:hover {
+            color: #ff0000;
+        }
+
+        .slider__button--prev {
+            left: 10px;
+        }
+
+        .slider__button--next {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="slider">
+    <div class="slider__image-container">
+        <img src="images/1.jpeg" alt="1" class="slider__image">
+        <img src="images/2.jpeg" alt="2" class="slider__image">
+        <img src="images/3.jpeg" alt="3" class="slider__image">
+    </div>
+    <button class="slider__button slider__button--prev">Назад</button>
+    <button class="slider__button slider__button--next">Вперед</button> 
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sliderContainer = document.querySelector('.slider__image-container');
+        const sliderImages = document.querySelectorAll('.slider__image');
+        const prevButton = document.querySelector('.slider__button--prev');
+        const nextButton = document.querySelector('.slider__button--next');
+
+        let currentImageIndex = 0;
+        const totalImages = sliderImages.length;
+
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+            updateSliderPosition();
+        }
+
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % totalImages;
+            updateSliderPosition();
+        }
+
+        function updateSliderPosition() {
+            const slideWidth = sliderImages[0].offsetWidth;
+            const newPosition = -currentImageIndex * slideWidth;
+            sliderContainer.style.transform = `translateX(${newPosition}px)`;
+        }
+
+        prevButton.addEventListener('click', showPrevImage);
+        nextButton.addEventListener('click', showNextImage);
+
+        updateSliderPosition();
+    });
+</script>
+</body>
+</html>
